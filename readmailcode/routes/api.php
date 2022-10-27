@@ -33,8 +33,13 @@ Route::get("/urgent/create",[GetmailController::class,'urgMailcreattion']);
 Route::group(["prefix"=>"v1"],function(){
     
     Route::get("get-new-temporary-email",[GetmailController::class,'get_temp_mail']);
-    Route::get("get-email-domains",[GetmailController::class,'get_email_domains']);
+    Route::get("get-email-domains",[GetmailController::class,'get_email_domains']); 
+
+    Route::get("get-message-byid/{id?}",[GetmailController::class,'get_message_byid']);
+    
     Route::get("get-messages",[GetmailController::class,'get_messages']);
+    
+
     Route::get("delete-message",[GetmailController::class,'del_message']);
     Route::post('login',[GetmailController::class,'login']);
     

@@ -590,33 +590,41 @@ class GetmailController extends Controller
 
 
     public function process(Request $request)
-{
+    {
 
-   
+       
+
+        
+        $payload = $request->input('payload', false);
+        $nonce = $payload['nonce'];
+
+        $status = \Braintree\Transaction::sale([
+    	'amount' => '10.00',
+    	'paymentMethodNonce' => $nonce,
+        'customer'=>["email"=>"mike@gmail.com"],
+    	'options' => [
+    	    'submitForSettlement' => True
+    	]
+        ]);
+
+        return response()->json($status);
+    }
+
 
     
-    $payload = $request->input('payload', false);
-    $nonce = $payload['nonce'];
-
-    $status = \Braintree\Transaction::sale([
-	'amount' => '10.00',
-	'paymentMethodNonce' => $nonce,
-    'customer'=>["email"=>"mike@gmail.com"],
-	'options' => [
-	    'submitForSettlement' => True
-	]
-    ]);
-
-    return response()->json($status);
-}
-
-
-    
 
 
 
 
 
+    public function get_message_byid($id=null){
+        if($id){
+            return TrashMail::messages($id);
+        }else{
+            return 1;
+        }
+
+    }
 
 
 }
